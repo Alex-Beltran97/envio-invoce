@@ -1,0 +1,132 @@
+{
+  "providers": [
+    {
+      "provider": "Yhaizley",
+      "nit": "343",
+      "address": "calle",
+      "phoneNumber": "+57 3197842892",
+      "id": 19
+    },
+    {
+      "provider": "Gaby",
+      "nit": "434434",
+      "address": "calle",
+      "phoneNumber": "+40 3197842892",
+      "id": 12
+    },
+    {
+      "provider": "Distrubidor Y",
+      "nit": "434434",
+      "address": "calle",
+      "phoneNumber": "+54 3197842892",
+      "id": 21
+    },
+    {
+      "provider": "Distrubidor B",
+      "nit": "9000000-2",
+      "address": "calle Falsa 242",
+      "phoneNumber": "+55 3197842892",
+      "id": 22
+    }
+  ],
+  "customers": [
+    {
+      "id": 1,
+      "name": "Pepito Juan",
+      "lastName": "Lopez",
+      "document": "1033555888",
+      "phoneNumber": "+57 3135556666",
+      "email": "pepito.lopez@correo.com"
+    },
+    {
+      "id": 2,
+      "name": "Juanito",
+      "lastName": "Alcachofa",
+      "document": "1033555889",
+      "phoneNumber": "+57 3135556665",
+      "email": "Juanito.Alcachofa@correo.com"
+    },
+    {
+      "id": 3,
+      "name": "Peranito",
+      "lastName": "Lopez",
+      "document": "1033555810",
+      "phoneNumber": "+57 3135556668",
+      "email": "Peranito.Lopez@correo.com"
+    },
+    {
+      "name": "Lala",
+      "lastName": "Lulu",
+      "document": "1033555811",
+      "phoneNumber": "+57 3135556611",
+      "email": "Lala.Lulu@correo.com",
+      "id": 4
+    },
+    {
+      "name": "Karen ",
+      "lastName": "Chica",
+      "document": "1000000",
+      "email": "p@gmail.com",
+      "phoneNumber": "+55 3210000022",
+      "id": 5
+    },
+    {
+      "name": "Antonio",
+      "lastName": "perez",
+      "document": "24631945",
+      "email": "correo@correo.com",
+      "phoneNumber": "+54 3159865325",
+      "id": 6
+    },
+    {
+      "name": "Atonio ",
+      "lastName": "De las casa",
+      "document": "1033801222",
+      "email": "ejemplo@ejemplo.com",
+      "phoneNumber": "+57 313558884",
+      "id": 7
+    }
+  ],
+  "products": [
+    {
+      "nameProduct": "Jalea de pera organica",
+      "price": 2000,
+      "amount": 5,
+      "expirationDate": "2022-10-21",
+      "provider": "21",
+      "id": 2
+    },
+    {
+      "nameProduct": "Jalea de Cereza Organica",
+      "price": 10000,
+      "amount": 2,
+      "expirationDate": "2022-10-13",
+      "provider": "19",
+      "id": 3
+    },
+    {
+      "nameProduct": "Jalea de Uva Organica",
+      "price": 10000,
+      "amount": 2,
+      "expirationDate": "2022-10-23",
+      "provider": "21",
+      "id": 4
+    },
+    {
+      "nameProduct": "Jalea de pera organica",
+      "price": 3,
+      "amount": 4,
+      "expirationDate": "2022-10-20",
+      "provider": "22",
+      "id": 6
+    },
+    {
+      "nameProduct": "Jalea de kiwi Organica!!!!",
+      "price": 1000,
+      "amount": 2,
+      "expirationDate": "2022-10-27",
+      "provider": "12",
+      "id": 7
+    }
+  ]
+}
