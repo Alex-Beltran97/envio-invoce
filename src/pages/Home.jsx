@@ -1,90 +1,38 @@
-import { Button } from '@mui/material';
-import React, { useState } from 'react'
-import { getProductsById } from '../actions/products.action';
-import { useShop } from '../context/ShopContext';
+import { Stack } from "@mui/material";
+import { Fragment, useEffect, useState } from "react";
+import CardTotal from "../components/Home/CardTotal";
+import FormInvoice from "../components/Home/FormInvoice/FormInvoice";
+import TablePorducts from "../components/Home/TableProducts/TablePorducts";
+import { useInvoice } from "../context/InvoiceContext";
 
 const Home = () => {  
-  const [date, setDate] = useState("");
-  const [customer, setCustomer] = useState("");
-  const [product, setProduct] = useState("");
-  const [price, setPrice] = useState(0);
-  const [amount, setAmount] = useState(0);
-  const [subTotal, setSubTtotal] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
-  const { customers, products } = useShop();
+  const { shoppingCart, purchaseDate, purchaser, forEdit } = useInvoice();
 
-  const getAProduct = async (id)=>{
-    setAmount(0);
-    setSubTtotal(0);
-    setProduct(id);
+  const getTotalPrice = ()=>{
+    const subTotals = shoppingCart.map(item=>item?.subTotal);
 
-    try{
-      const { data } = await getProductsById(id);
-      if(!id){
-        setPrice(0);
-        return
-      };
-
-      setPrice(data?.price);
-    }catch(error){
-      console.log(error);
+    if(subTotals.length>0){
+      const result = subTotals.reduce((amount,item)=>amount+item);
+      setTotalPrice(result);
     };
   };
 
-  const multiplyPrice = (quantity) =>{
-    setAmount(quantity);
-    setSubTtotal(+price*+quantity);
-  };
+  useEffect(() => {
+    getTotalPrice();
+  }, [shoppingCart]);
 
-  const handleSubmit = (e) =>{
-    e.preventDefault();
-
-    console.log({
-      product,
-      price,
-      amount,
-      subTotal
-    });
-  }; 
-  
   return (<>
-    <form onSubmit={ handleSubmit }>
-      <div>
-        <label htmlFor="date">Date:</label>
-        <input type="date" name="date" onChange={ e=>setDate(e.target.value) } value={ date } />
-      </div>
-      <div>
-        <label htmlFor="customer">Customer:</label>
-        <select name="customer" onChange={ e=>setCustomer(e.target.value)  } value={ customer }>
-          <option value="">Choose one</option>
-          { customers.map(item=>(
-            <option key={ item.id } value={ item.id }>{ `${ item.name } ${ item.lastName }` }</option>
-          )) }
-        </select>
-      </div>
-      <div>
-        <label htmlFor="product">Product:</label>
-        <select name="product" onChange={ e=>getAProduct(e.target.value)  } value={ product }>
-          <option value="">Choose one</option>
-          { products.map(item=>(
-            <option key={ item.id } value={ item.id }>{ `${ item.nameProduct }` }</option>
-          )) }
-        </select>
-      </div>
-      <div>
-        <label htmlFor="price">Price</label>
-        <input type="number" name="price" value={ price } disabled />
-      </div>
-      <div>
-        <label htmlFor="amount">Amount:</label>
-        <input type="number" name="amount" onChange={ e=>multiplyPrice(e.target.value)  } value={ amount } min={ 0 } />
-      </div>
-      <div>
-        <label htmlFor="subTotal">SubTotal:</label>
-        <input type="number" name="subTotal" value={ subTotal } disabled />
-      </div>
-      <Button variant="contained" type="submit">Submit</Button>
-    </form>
+    <Stack spacing={ 4 }>
+      <FormInvoice forEdit={ forEdit } />
+      {shoppingCart.length>0 &&
+        <Fragment>
+          <CardTotal date={ purchaseDate } customer={ purchaser } totalPrice={ totalPrice } />
+          <TablePorducts data={ shoppingCart } />
+        </Fragment>
+      }
+    </Stack>
   </>)
 };
 

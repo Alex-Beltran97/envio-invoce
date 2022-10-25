@@ -1,5 +1,6 @@
 import { Container } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
+import { InvoiceProvider } from "./context/InvoiceContext";
 import Curstomers from "./pages/Curstomers";
 import Home from "./pages/Home";
 import PageNotFound from "./pages/PageNotFound";
