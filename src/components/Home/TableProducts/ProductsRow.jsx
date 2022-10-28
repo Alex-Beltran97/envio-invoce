@@ -3,9 +3,12 @@ import { useEffect, useState } from "react";
 import { IoCreateOutline, IoTrashOutline } from "react-icons/io5";
 import { getProductsById } from '../../../actions/products.action';
 import { useInvoice } from "../../../context/InvoiceContext";
+import { useFormInvoice } from "../../../hooks/useFormInvoice";
 
 const ProductsRow = ({ id, product, price, amount, subTotal }) => {
   const [productName, setProductName] = useState();
+
+  const { shoppingCart } = useInvoice();
 
   const getAProduct = async ()=>{
     try{
@@ -16,7 +19,12 @@ const ProductsRow = ({ id, product, price, amount, subTotal }) => {
     };
   };
 
-  const { deleteElement } = useInvoice();
+  const { deleteElement, setInfoToEdit } = useInvoice();
+
+  const filterShoppingCart = () =>{
+    const result = shoppingCart.find(item=>item.id===id);
+    setInfoToEdit(result);
+  };
 
   useEffect(() => {
     getAProduct();
@@ -29,7 +37,7 @@ const ProductsRow = ({ id, product, price, amount, subTotal }) => {
       <TableCell>{ amount }</TableCell>              
       <TableCell>{ subTotal }</TableCell>              
       <TableCell>
-        <IconButton>
+        <IconButton onClick={ filterShoppingCart }>
           <IoCreateOutline />
         </IconButton>
         <IconButton onClick={ ()=>deleteElement(id) }>

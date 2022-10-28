@@ -17,7 +17,10 @@ const FormInvoice = ({}) => {
     product,
     price,
     amount,
-    subTotal
+    subTotal,
+    resetForm,
+    elementId,
+    setElementId
   } = useFormInvoice();
 
   const tools = {
@@ -35,7 +38,17 @@ const FormInvoice = ({}) => {
     subTotal
   };
 
-  const { shoppingCart, setshoppingCart  } = useInvoice();
+  const editBuy = (data,dataToSend) =>{
+    let modifyingCart = [...data];
+
+    const position = data.findIndex(item=>item.id===elementId);
+
+    modifyingCart[position] = dataToSend;
+
+    return modifyingCart;
+  };
+
+  const { shoppingCart, setshoppingCart, infoToEdit, setInfoToEdit } = useInvoice();
 
   const handleSubmit = (e) =>{
     e.preventDefault();
@@ -47,12 +60,29 @@ const FormInvoice = ({}) => {
       amount:+amount,
       subTotal:+subTotal
     };
+    
+    resetForm();
+
+    let newShoppingCart; 
+    
+    if(infoToEdit?.id){
+      newShoppingCart = editBuy(shoppingCart, dataToSend); 
+
+      setshoppingCart([...newShoppingCart]);
+
+      setInfoToEdit({});
+      setElementId("");
+      return
+    };
 
     setshoppingCart([...shoppingCart, dataToSend]);
+
+    
   }; 
 
   return (<>
-    <form onSubmit={ handleSubmit } style={{ width:"100%" }}>
+    
+    <form onSubmit={ handleSubmit } style={{ width:"100%" }} id="form">
       <Grid container spacing={ 4 }>
         <FieldsForm tools={ tools } />
         <Grid item xs={ 2 } alignSelf="center" justifyContent="center">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getProductsById } from "../actions/products.action";
 import { useInvoice } from "../context/InvoiceContext";
 import { useShop } from "../context/ShopContext";
@@ -10,10 +10,18 @@ const useFormInvoice = () => {
   const [price, setPrice] = useState(0);
   const [amount, setAmount] = useState(0);
   const [subTotal, setSubTtotal] = useState(0);
+  const [elementId, setElementId] = useState("");
 
   const { customers, products } = useShop();
   
-  const { setPurchaseDate, setPurchaser } = useInvoice();
+  const { setPurchaseDate, setPurchaser, infoToEdit } = useInvoice();
+
+  const resetForm = () =>{
+    setProduct("");
+    setPrice(0);
+    setAmount(0);
+    setSubTtotal(0);
+  };
 
   const handleDate = (value) =>{
     setDate(value);
@@ -32,6 +40,7 @@ const useFormInvoice = () => {
 
     try{
       const { data } = await getProductsById(id);
+      
       if(!id){
         setPrice(0);
         return
@@ -48,6 +57,22 @@ const useFormInvoice = () => {
     setSubTtotal(+price*+quantity);
   };  
 
+  const editValues = (values) =>{
+    const { product, price, amount, subTotal, id } = values;
+
+    setElementId(id);
+    setProduct(product);
+    setPrice(price);
+    setAmount(amount);
+    setSubTtotal(subTotal);
+  };
+
+  useEffect(() => {
+    if(infoToEdit?.id){
+      editValues(infoToEdit)
+    };
+  }, [infoToEdit]);
+
   return {
     date,
     setDate:handleDate,
@@ -60,7 +85,10 @@ const useFormInvoice = () => {
     product,
     price,
     amount,
-    subTotal
+    subTotal,
+    resetForm,
+    elementId,
+    setElementId
   };
 };
 
